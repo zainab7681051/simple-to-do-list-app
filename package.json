@@ -1,0 +1,31 @@
+{
+  "name": "to-do-list-app",
+  "version": "1.0.0",
+  "description": "a simple to-do list web app with interface in vue and web server in nodejs express and database in postgresql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zainab7681051/simple-to-do-list-app.git"
+  },
+  "keywords": [
+    "to-do",
+    "list",
+    "app",
+    "vuejs",
+    "nodejs",
+    "expressjs",
+    "sequeilze",
+    "orm",
+    "postgresql",
+    "fullstack"
+  ],
+  "author": "zainab7681051",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zainab7681051/simple-to-do-list-app/issues"
+  },
+  "homepage": "https://github.com/zainab7681051/simple-to-do-list-app#readme"
+}
