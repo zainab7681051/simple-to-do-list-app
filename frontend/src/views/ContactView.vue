@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-    	<main-comp msg="LOGIN" />
+    	  <main-comp msg="THIS IS A CONTACT PAGE" />
     </v-main>
   </v-app>
 </template>
@@ -10,8 +10,9 @@
   import MainComp from '../components/Main.vue'
 
   export default {
-    name: 'login',
-      data: () => ({
+    name: 'contact',
+	
+	data: () => ({
     //
   }),
 

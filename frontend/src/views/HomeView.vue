@@ -10,7 +10,7 @@
   import MainComp from '../components/Main.vue'
 
   export default {
-    name: 'Home',
+    name: 'home',
       data: () => ({
     //
   }),
