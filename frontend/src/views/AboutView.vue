@@ -1,5 +1,23 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-app>
+    <v-main>
+    	  <main-comp msg="THIS IS AN ABOUT PAGE" />
+    </v-main>
+  </v-app>
 </template>
+
+<script>
+  import MainComp from '../components/Main.vue'
+
+  export default {
+    name: 'About',
+	
+	data: () => ({
+    //
+  }),
+
+    components: {
+      MainComp,
+    },
+  }
+</script>
