@@ -7,6 +7,14 @@ const sequelize=new SEQUELIZE(
 	config.db.user,
 	config.db.password,
 	config.db.options,
+    {
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    }
 )
 
 sequelize

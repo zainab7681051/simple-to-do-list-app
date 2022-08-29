@@ -4,6 +4,7 @@ const User=db.user
 const jwt=require('jsonwebtoken')
 const config =require('../config')
 const bcrypt=require('bcrypt')
+const Op = db.SEQUELIZE.Op;
 
 function jwtSignUser(user){
 const ONE_WEEK=60*60*24*7
@@ -18,6 +19,7 @@ module.exports={
 		try{
 			  const salt = await bcrypt.genSalt(10);
 			  var data = {
+			  	name: req.body.name,
 			  	email : req.body.email,
 			    password : await bcrypt.hash(req.body.password, salt)
 			  };
@@ -36,7 +38,7 @@ module.exports={
 			})
 		}catch(error){
 			res.status(400).send({
-				error:`email is already in use.`
+				error:`name/email is already in use.`
 			})
 		}
 		
@@ -44,10 +46,14 @@ module.exports={
 
 	async login (req,res){
 		try{
-			const {email, password}=req.body;
+			//name is either email adress or user name
+			const {name, password}=req.body;
 			const user=await User.findOne({
 				where:{
-					email:email
+					[Op.or]:[
+					{name:name},
+					{email:name}
+					]
 				}
 			})			
 
