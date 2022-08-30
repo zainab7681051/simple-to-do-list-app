@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-main>
-    	<main-comp msg="LOGIN" />
+    	<form-comp msg="LOGIN" />
     </v-main>
   </v-app>
 </template>
 
 <script>
-  import MainComp from '../components/Main.vue'
+  import FormComp from '../components/FormComp.vue'
 
   export default {
     name: 'login',
@@ -16,7 +16,7 @@
   }),
 
     components: {
-      MainComp,
+      FormComp,
     },
   }
 </script>

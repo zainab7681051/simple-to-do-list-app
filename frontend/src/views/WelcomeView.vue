@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-main>
-    	<main-comp msg="REGISTER" />
+    	<welcome-comp msg="WELCOME TO TO-DO'S LIST" />
     </v-main>
   </v-app>
 </template>
 
 <script>
-  import MainComp from '../components/MainComp.vue'
+  import WelcomeComp from '../components/WelcomeComp.vue'
 
   export default {
     name: 'home',
@@ -16,7 +16,7 @@
   }),
 
     components: {
-      MainComp,
+      WelcomeComp,
     },
   }
 </script>

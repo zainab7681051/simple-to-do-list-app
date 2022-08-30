@@ -7,10 +7,10 @@
 </template>
 
 <script>
-  import MainComp from '../components/Main.vue'
+  import MainComp from '../components/MainComp.vue'
 
   export default {
-    name: 'home',
+    name: 'list',
       data: () => ({
     //
   }),
