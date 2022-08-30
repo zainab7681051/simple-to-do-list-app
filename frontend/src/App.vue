@@ -8,6 +8,7 @@
     >
       <v-sheet
         class="pa-4"
+        color="#ab92b3"
       >
        <v-avatar
           class="mb-4"
@@ -80,7 +81,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title
-              @click="$router.push('/')"
+              @click="$router.push('/list')"
               class="display-1"
               style="cursor:pointer">TO DO'S</v-toolbar-title>
       <v-spacer/>
@@ -89,6 +90,7 @@
         v-model="$vuetify.theme.dark"
         label="change theme"
         class="mt-5"
+        color="#ab92b3"
         >
         </v-switch>
       </v-toolbar-items>
