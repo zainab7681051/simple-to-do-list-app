@@ -154,15 +154,22 @@ export default {
               authentication.login({
                   name:this.name,
                   password:this.password
-                })/*
+                })
+            
             this.$store.dispatch(
               'setToken',
-              response.data.token
+              response
+              .data
+              .token
               )
+            
             this.$store.dispatch(
               'setUser',
-              response.data.token
-              )*/
+              response
+              .data
+              .user
+              )
+            
             this.$router.push({
               name:'list'
             })
