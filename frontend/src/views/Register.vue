@@ -1,77 +1,107 @@
 <template>
-  <v-app>
-    <v-main>
-      <v-layout column>
-    <v-layout>
-      <v-container>
-        <v-flex>
-          <v-card>
-            
-            <v-card-title 
-            style="background-color:#ab92b3;">
-            REGISTER
-            </v-card-title>
-            
-            <form 
-            class="ml-2 mr-2"
-            >
-              <v-text-field
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                label="Name"
-                required
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()">
-              </v-text-field>
-              <v-text-field
-                v-model="email"
-                :error-messages="emailErrors"
-                label="E-mail"
-                required
-                @input="$v.email.$touch()"
-                @blur="$v.email.$touch()"
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                :error-messages="passwordErrors"
-                label="Password"
-                required
-                type="password"
-                :counter="10"
-                @input="$v.password.$touch()"
-                @blur="$v.password.$touch()"
-              ></v-text-field>
-              <v-checkbox
-                v-model="checkbox"
-                label="Stay Logged in?"
-                @change="$v.checkbox.$touch()"
-                @blur="$v.checkbox.$touch()"
-              ></v-checkbox>
-              <v-btn
-                class="mr-4 ml-4"
-                @click="submit"
-              >
-                submit
-              </v-btn>
-              <v-btn 
-              @click="clear">
-                clear
-              </v-btn>
-            </form>
-          </v-card>
-        </v-flex>
-      </v-container>
-    </v-layout>
-  </v-layout>
-    </v-main>
-  </v-app>
-</template>
+  <div class="text-center">
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+    <template v-slot:activator="{ on, attrs }">
+      <v-app>
+        <v-main>
+          <v-layout column>
+            <v-layout>
+              <v-container>
+                <v-flex>
+                  <v-card>
+                    <v-card-title 
+                    style="background-color:#ab92b3;">
+                    REGISTER
+                    </v-card-title>
+                    
+                    <form 
+                    class="ml-2 mr-2"
+                    >
+                      <v-text-field
+                        v-model="name"
+                        :error-messages="nameErrors"
+                        :counter="10"
+                        label="Name"
+                        required
+                        @input="$v.name.$touch()"
+                        @blur="$v.name.$touch()">
+                      </v-text-field>
+                      <v-text-field
+                        v-model="email"
+                        :error-messages="emailErrors"
+                        label="E-mail"
+                        required
+                        @input="$v.email.$touch()"
+                        @blur="$v.email.$touch()"
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="password"
+                        :error-messages="passwordErrors"
+                        label="Password"
+                        required
+                        type="password"
+                        :counter="10"
+                        @input="$v.password.$touch()"
+                        @blur="$v.password.$touch()"
+                      ></v-text-field>
+                      <v-checkbox
+                        v-model="checkbox"
+                        label="Stay Logged in?"
+                        @change="$v.checkbox.$touch()"
+                        @blur="$v.checkbox.$touch()"
+                      ></v-checkbox>
+                      <v-btn
+                        class="mr-4 ml-4 mb-2"
+                        @click="submit"
+                      >
+                        submit
+                      </v-btn>
+                      <v-btn 
+                      class="mb-2"
+                      @click="clear">
+                        clear
+                      </v-btn>
+                    </form>
+                  </v-card>
+                </v-flex>
+              </v-container>
+            </v-layout>
+          </v-layout>
+      </v-main>
+    </v-app>
+  </template>
 
+    <v-card>
+        <v-card-title>
+          ERROR!
+        </v-card-title>
+
+        <v-card-text>
+          {{fatalError}}
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            @click="dialog = false"
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength, email } from 'vuelidate/lib/validators'
-
+import authentication from '../service/authentication.js'
 export default {
   name: 'register',
   mixins: [validationMixin],
@@ -80,6 +110,8 @@ export default {
       email: '',
       password:'',
       checkbox: false,
+      fatalError:'',
+      dialog:false
     }),
 
   validations: {
@@ -130,8 +162,38 @@ export default {
     },
 
     methods: {
-      submit () {
-        this.$v.$touch()
+      async submit () {
+        if(!this.$v.name.$invalid&&
+          !this.$v.email.$invalid&&
+          !this.$v.password.$invalid)
+          {
+            try {
+              const response=await
+              authentication.register({
+                  name:this.name,
+                  email:this.email,
+                  password:this.password
+                })/*
+            this.$store.dispatch(
+              'setToken',
+              response.data.token
+              )
+            this.$store.dispatch(
+              'setUser',
+              response.data.token
+              )*/
+            this.$router.push({
+              name:'list'
+            })
+          }catch(error) {
+            this.fatalError=error.response.data.error;
+            this.dialog=true
+            
+          }
+      }else{
+        this.fatalError='no empty or invalid forms'
+        this.dialog=true
+        }
       },
       clear () {
         this.$v.$reset()
@@ -139,6 +201,7 @@ export default {
         this.email = ''
         this.password = ''
         this.checkbox = false
+        this.fatalError=''
       },
     },
   }
