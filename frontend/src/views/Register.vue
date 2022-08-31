@@ -23,7 +23,7 @@
                       <v-text-field
                         v-model="name"
                         :error-messages="nameErrors"
-                        :counter="10"
+                        :counter="15"
                         label="Name"
                         required
                         @input="$v.name.$touch()"
@@ -43,7 +43,7 @@
                         label="Password"
                         required
                         type="password"
-                        :counter="10"
+                        :counter="15"
                         @input="$v.password.$touch()"
                         @blur="$v.password.$touch()"
                       ></v-text-field>
@@ -117,7 +117,7 @@ export default {
   validations: {
     name: { 
       required, 
-      maxLength: maxLength(10) 
+      maxLength: maxLength(15) 
     },
     email: { 
       required, 
@@ -125,7 +125,7 @@ export default {
     },
     password:{
       required,
-      maxLength: maxLength(10),
+      maxLength: maxLength(15),
       minLength: minLength(5),
     },
     checkbox: {
@@ -139,8 +139,8 @@ export default {
       nameErrors () {
         const errors = []
         if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
+        !this.$v.name.maxLength && errors.push('Name must be at most 15 characters long')
+        !this.$v.name.required && errors.push('Name is required')
         return errors
       },
       emailErrors () {
@@ -155,7 +155,7 @@ export default {
         if (!this.$v.password.$dirty) return errors
         //FOR LATER==>!this.$v.email.email && errors.push('password must have one or more letters, small and cap')
         !this.$v.password.minLength && errors.push('password must be at least 5 characters long')
-        !this.$v.password.maxLength && errors.push('password must be at most 10 characters long')
+        !this.$v.password.maxLength && errors.push('password must be at most 15 characters long')
         !this.$v.password.required && errors.push('Password is required')
         return errors
       },

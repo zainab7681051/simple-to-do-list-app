@@ -24,7 +24,7 @@
                       <v-text-field
                         v-model="name"
                         :error-messages="nameErrors"
-                        label="Name or Email"
+                        label="Name or E-mail"
                         required
                         @input="$v.name.$touch()"
                         @blur="$v.name.$touch()">
@@ -121,8 +121,6 @@ export default {
     },
     password:{
       required,
-      maxLength: maxLength(10),
-      minLength: minLength(5),
     },
     checkbox: {
       checked (val) {
@@ -135,13 +133,12 @@ export default {
       nameErrors () {
         const errors = []
         if (!this.$v.name.$dirty) return errors
-        !this.$v.name.required && errors.push('Name is required.')
+        !this.$v.name.required && errors.push('Name Or E-mail is required.')
         return errors
       },
       passwordErrors () {
         const errors = []
         if (!this.$v.password.$dirty) return errors
-        //FOR LATER==>!this.$v.email.email && errors.push('password must have one or more letters, small and cap')
         !this.$v.password.required && errors.push('Password is required')
         return errors
       }

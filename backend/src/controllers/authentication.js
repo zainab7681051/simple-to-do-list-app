@@ -38,7 +38,7 @@ module.exports={
 			})
 		}catch(error){
 			res.status(400).send({
-				error:`name/email is already in use.`
+				error:`Name or E-mail is already in use.`
 			})
 		}
 		
@@ -75,19 +75,19 @@ module.exports={
 				}else{
 
 					return res.status(403).send({
-						error: 'password is incorrect'
+						error: 'Password is incorrect'
 					})
 					
 				}
 
 			}else{
 				return res.status(403).send({
-					error:'account does not exist'
+					error:'Account does not exist'
 				})
 			}
 		}catch(error){
 			res.status(500).send({
-				error:`an error has occured :(`
+				error:`An error has occured :(`
 			})
 		}
 		

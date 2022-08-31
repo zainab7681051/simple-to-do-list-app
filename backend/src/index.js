@@ -17,7 +17,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 require('./routes.js')(app);
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: true })
 .then(() => {
   console.log(`resync`)
   app.listen(config.port)
