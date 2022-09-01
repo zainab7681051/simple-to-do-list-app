@@ -12,7 +12,6 @@
               <v-container>
                 <v-flex>
                   <v-card>
-                    
                     <v-card-title 
                     style="background-color:#ab92b3;">
                     LOGIN

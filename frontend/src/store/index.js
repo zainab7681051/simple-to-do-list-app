@@ -5,10 +5,10 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  strict:true,/*
+  strict:true,
   plugins: [
     createPersistedState()
-  ],*/
+  ],
   state: {
     token:null,
     user:null,

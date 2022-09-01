@@ -2,7 +2,7 @@
   <v-app id="inspire">
 <!-- ******************************* -->
     <!-- SITE HEADER -->
-<header-comp/>
+    <header-comp/>
 <!-- ******************************* -->
 <!-- SITE MAIN -->
     <v-main>
@@ -11,10 +11,9 @@
       </v-container>
     </v-main>
 <!-- ******************************* -->
-<!-- SITE FOOTER -->
+    <!-- SITE FOOTER -->
 <!-- ******************************* -->
   </v-app>
-
 </template>
 
 <script>
@@ -24,7 +23,7 @@ export default {
   name: 'App',
 
   data: () => ({
-    drawer:null
+    
   }),
 
     components: {

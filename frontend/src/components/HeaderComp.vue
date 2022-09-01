@@ -12,9 +12,15 @@
          <v-avatar
             class="mb-4"
             size="64">
-          <v-icon size="64">
+          <v-icon
+          v-if="!isUserLoggedIn" 
+          size="64">
             mdi-account-circle
           </v-icon>
+          <v-img
+          v-if="isUserLoggedIn"
+          src='../assets/logo.png'>
+        </v-img>
         </v-avatar>
 
           <div v-if="!isUserLoggedIn">
@@ -22,7 +28,9 @@
           </div>
 
           <div v-if="isUserLoggedIn">
-            You Are Logged In
+            <p style="font-size:x-large;">
+            {{user.name}}</p>
+            <p>{{user.email}}</p>
           </div>
       </v-sheet>
 
@@ -31,6 +39,7 @@
       <v-list>
         <v-list-item
         to="/login"
+        v-if="!isUserLoggedIn"
         >
           <v-list-item-icon>
             <v-icon>mdi-login</v-icon>
@@ -43,6 +52,7 @@
 
         <v-list-item
         to="/register"
+        v-if="!isUserLoggedIn"
         >
           <v-list-item-icon>
             <v-icon>mdi-account-box</v-icon>
@@ -54,6 +64,30 @@
         </v-list-item>
 
 
+        <v-list-item
+        v-if="isUserLoggedIn"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-heart</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Favourites</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+        v-if="isUserLoggedIn"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-account-cog-outline</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Update Profile</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
         <v-list-item
         to="/about"
         >
@@ -75,6 +109,19 @@
 
           <v-list-item-content>
             <v-list-item-title>Contact</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+        v-if="isUserLoggedIn"
+        @click="logout"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -115,6 +162,16 @@ export default {
       'isUserLoggedIn',
       'user'
     ])
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        name: 'welcome'
+      })
+
+    }
   },
   props: {
     msg: String
