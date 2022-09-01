@@ -46,13 +46,13 @@
                         :counter="15"
                         @input="$v.password.$touch()"
                         @blur="$v.password.$touch()"
-                      ></v-text-field>
+                      ></v-text-field><!-- 
                       <v-checkbox
                         v-model="checkbox"
                         label="Stay Logged in?"
                         @change="$v.checkbox.$touch()"
                         @blur="$v.checkbox.$touch()"
-                      ></v-checkbox>
+                      ></v-checkbox> -->
                       <v-btn
                         class="mr-4 ml-4 mb-2"
                         @click="submit"

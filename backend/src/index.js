@@ -7,7 +7,7 @@ const config=require('./config')
 
 const app=express();
 let corsOption={
-	origin: "http://localhost:8080"
+	origin: "http://localhost:8081"
 }
 
 app.use(cors())
@@ -15,6 +15,7 @@ app.use(morgan("combined"))
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
+require('./passport')
 require('./routes.js')(app);
 
 sequelize.sync({ force: true })

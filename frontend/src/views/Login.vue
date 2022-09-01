@@ -37,13 +37,13 @@
                         type="password"
                         @input="$v.password.$touch()"
                         @blur="$v.password.$touch()"
-                      ></v-text-field>
+                      ></v-text-field><!-- 
                       <v-checkbox
                         v-model="checkbox"
                         label="Stay Logged in?"
                         @change="$v.checkbox.$touch()"
                         @blur="$v.checkbox.$touch()"
-                      ></v-checkbox>
+                      ></v-checkbox> -->
 
                       <v-btn
                       to="/register"
