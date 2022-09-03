@@ -3,14 +3,13 @@
   <v-layout>
     <v-container>
     <v-flex xs12>
-      <v-card height="200">
+      <v-card >
         <v-card-title
         style="background-color:#ab92b3;">
-          {{msg}}
+          {{title}}
         </v-card-title>
-        <v-card-text
-        v-if="msg=='WELCOME TO YOUR TO-DO\'S LIST'">
-        LIST LIST LIST
+        <v-card-text>
+        LIST LIST LIST unlogged
         </v-card-text>
       </v-card>
     </v-flex>
@@ -21,9 +20,9 @@
 
 <script>
 export default {
-  name: 'main-comp',
+  name: 'list-comp-unlog',
   props: {
-    msg: String
+    title: String
   }
 }
 

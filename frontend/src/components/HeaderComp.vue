@@ -65,6 +65,7 @@
 
 
         <v-list-item
+        to="/favs"
         v-if="isUserLoggedIn"
         >
           <v-list-item-icon>
@@ -77,6 +78,7 @@
         </v-list-item>
 
         <v-list-item
+        to="/profile"
         v-if="isUserLoggedIn"
         >
           <v-list-item-icon>
@@ -84,7 +86,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Update Profile</v-list-item-title>
+            <v-list-item-title>Edit Profile</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         

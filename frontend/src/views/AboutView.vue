@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-    	  <main-comp msg="THIS IS AN ABOUT PAGE" />
+    	  <main-comp msg="ABOUT US" />
     </v-main>
   </v-app>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-    	  <main-comp msg="CONTACT US" />
+    	  <main-comp msg="EDIT YOUR PROFILE" />
     </v-main>
   </v-app>
 </template>
@@ -10,7 +10,7 @@
   import MainComp from '../components/MainComp.vue'
 
   export default {
-    name: 'contact',
+    name: 'edit-profile',
 	
 	data: () => ({
     //

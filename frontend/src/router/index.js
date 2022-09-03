@@ -6,6 +6,8 @@ import ContactView from '../views/ContactView.vue'
 import RegisterView from '../views/Register.vue'
 import LoginView from '../views/Login.vue'
 import WelcomeView from '../views/WelcomeView.vue'
+import EditProfView from '../views/EditProfView.vue'
+import FavView from '../views/FavView.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +41,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component:LoginView
+  },
+  {
+    path: '/favs',
+    name: 'favourites',
+    component:FavView
+  },
+  {
+    path: '/profile',
+    name: 'edit-profile',
+    component:EditProfView
   }
 ]
 

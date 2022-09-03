@@ -3,13 +3,12 @@
   <v-layout>
     <v-container>
     <v-flex xs12>
-      <v-card >
+      <v-card>
         <v-card-title
         style="background-color:#ab92b3;">
-          {{title}}
         </v-card-title>
         <v-card-text>
-        LIST LIST LIST logged
+          contact
         </v-card-text>
       </v-card>
     </v-flex>
@@ -20,9 +19,8 @@
 
 <script>
 export default {
-  name: 'list-comp-log',
+  name: 'contact-comp',
   props: {
-    title: String
   }
 }
 
