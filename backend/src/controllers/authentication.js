@@ -28,7 +28,8 @@ module.exports={
 			const userjson=user.toJSON()
 			const jwtsu=jwtSignUser(userjson) 
 			
-			res.send({
+			res.status(200).send({
+				message:'registered successfully!',
 				user:userjson,
 				token:jwtsu
 			})
@@ -64,7 +65,8 @@ module.exports={
 				if(validPassword){
 					const userjson=user.toJSON()
 					const jwtsu=jwtSignUser(userjson) 
-					res.send({
+					res.status(200).send({
+						message:'logged in successfully!',
 						user:userjson,
 						token:jwtsu
 					})

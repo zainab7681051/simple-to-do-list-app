@@ -127,12 +127,7 @@ export default {
       required,
       maxLength: maxLength(15),
       minLength: minLength(5),
-    },
-    checkbox: {
-      checked (val) {
-        return val
-      },
-    },
+    }
   },
 
     computed: {

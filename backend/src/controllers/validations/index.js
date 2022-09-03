@@ -149,6 +149,54 @@ module.exports={
   
 	},
 
+	async createInList(req,res,next){
+	  try {
+	  	const schema=Joi.object({
+							text: Joi.string()
+					        .required(),
+		
+							date: Joi.string()
+							.required()
+						})
+		
+				const {error,value}=schema.validate(req.body) //validate body data against schema
+				if(error){
+				switch (error.details[0].type) {
+					case 'string.empty': //required()
+						if(error.details[0].context.key==='text'){
+							res.status(400).send({
+					 			error:'Text input field is required'
+					 		})
+							break
+						}
+						else if(error.details[0].context.key==='date'){
+							res.status(400).send({
+					 			error:'Date input field is required'
+							})
+							break
+						}
+		
+					default:
+						console.log(error.details)
+						res.status(400).send({
+							error:'No empty or invalid fields'
+						})
+						break;
+					}
+				
+				} else {
+					next()
+				}
+	  } catch (e) {
+	  	console.log(e)
+	  	res.status(500).send({
+			error:'An error has occured :('
+		})
+	  }
+  
+	},
+
+
 	
 
 }
