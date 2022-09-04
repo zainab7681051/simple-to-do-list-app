@@ -7,6 +7,9 @@ const List=sequelize.define('list',{
 	},
 	toDoDate:{
 		type: Datatypes.STRING,
+	},
+	toDoDone:{
+		type: Datatypes.BOOLEAN,
 	}
 		
 })

@@ -4,16 +4,19 @@ const User=db.user
 module.exports={
 	async create(req,res){
 		try {
-			const data={
-				toDoText:req.body.text,
-				toDoDate:req.body.date,
-				userId:req.body.userId
+			const a={
+				toDoText:req.body.toDoText,
+				toDoDate:req.body.toDoDate,
+				userId:req.user.id,
+				toDoDone:false
+
 			}
-			const list=await List.create(data)
+			const list=await List.create(a)
 			console.log(list.toJSON())
+			//SORT BY UPDATE AND CREATE THNE SEND
 			res.status(200).send({
 				message:'to-do was created successfuly',
-				list.toJSON()
+				list:list.toJSON()
 			})
 		} catch(e) {
 			console.log(e)
@@ -27,17 +30,17 @@ module.exports={
 		try {
 			const list=await List.findAll({
 				where:{
-					userId:'1'
-				}
+					userId:req.user.id
+				},
+				order:[
+				['createdAt', 'DESC'],
+				['updatedAt', 'DESC'],
+				]
 			})
-			lists={}
 			if(list[0]){
-				list.forEach( async function(element, index) {
-				console.log(index,element.toJSON())
-				lists=element
-				})
+				console.log(list)
 				res.status(200).send({
-					lists,
+					list,
 					message:'to-do\'s were fetched successfuly'
 				})
 			}else{
@@ -59,7 +62,7 @@ module.exports={
 			const list=await List.findOne({
 				where:{
 					id:id,
-					userId:'1'
+					userId:req.user.id
 				}
 			})
 			await list.destroy()
@@ -77,7 +80,7 @@ module.exports={
 		try {
 			const list=await List.findAll({
 				where:{
-					userId:'1'
+					userId:req.user.id
 				}
 			})
 			if(list[0]){
@@ -85,11 +88,11 @@ module.exports={
 				console.log(index,element)
 				await element.destroy()
 				});
-				res.status(200).send({
+				return res.status(200).send({
 					message:'list was deleted successfuly'
 				})
 			}else{
-				 res.status(400).send({
+				 return res.status(400).send({
 				error:'No todo\'s to delete:('
 			})
 			}
@@ -103,10 +106,40 @@ module.exports={
 
 	async updateById(req,res){
 		try {
-			// statements
+			const {id}=req.params
+			const data={
+				toDoText:req.body.text,
+				toDoDate:req.body.date,
+				userId:req.user.id,
+				toDoDone:req.body.done ? req.body.done : false
+			}
+			const list=await List.findOne({
+				where:{
+					id:id,
+					userId:req.user.id
+				}
+			})
+		   if (list) {
+		   await List.update(data,{
+				where:{
+					id:id,
+					userId:req.user.id
+				}
+			})
+		   	console.log(list)
+		   	return res.send(data)
+		   }
+		   else{
+		   	return res.status(400).send({
+		   		error: 'cannot update because to-do does not exist'
+		   	})
+		   }
+   
 		} catch(e) {
-			// statements
 			console.log(e);
+			res.status(500).send({
+		   		error: 'cannot update list :('
+		   	})
 		}
 	}
 }

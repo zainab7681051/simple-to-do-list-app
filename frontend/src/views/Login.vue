@@ -120,12 +120,7 @@ export default {
     },
     password:{
       required,
-    },
-    checkbox: {
-      checked (val) {
-        return val
-      },
-    },
+    }
   },
 
     computed: {

@@ -13,23 +13,24 @@ module.exports=(app)=>{
 		AuethController.login)
 
 	app.post('/list/create',
-		//isUserAuethController,
-		//ValidController.createInList,
+		isUserAuethController,
+		ValidController.InList,
 		ListController.create)
 
 	app.get('/list',
-		//isUserAuethController,
+		isUserAuethController,
 		ListController.getAll)
 
 	app.delete('/list/:id',
-		//isUserAuethController,
+		isUserAuethController,
 		ListController.deleteById)
 
 	app.delete('/list',
-		//isUserAuethController,
+		isUserAuethController,
 		ListController.deleteAll)
 
 	app.put('/list/:id',
-		//isUserAuethController,
+		isUserAuethController,
+		ValidController.InList,
 		ListController.updateById)
 }

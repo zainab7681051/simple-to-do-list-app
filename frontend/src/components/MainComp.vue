@@ -8,7 +8,7 @@
         style="background-color:#ab92b3;">
           {{msg}}
         </v-card-title>
-          <list-comp-log title='dddd' v-if="msg=='WELCOME TO YOUR TO-DO\'S LIST'"/>
+          <list-comp-log v-if="msg=='WELCOME TO YOUR TO-DO\'S LIST'"/>
 
           <fav-comp v-if="msg=='YOUR FAVOURITES' && isUserLoggedIn"/>
 

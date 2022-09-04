@@ -149,27 +149,28 @@ module.exports={
   
 	},
 
-	async createInList(req,res,next){
+	async InList(req,res,next){
 	  try {
 	  	const schema=Joi.object({
-							text: Joi.string()
+							toDoText: Joi.string()
 					        .required(),
 		
-							date: Joi.string()
-							.required()
+							toDoDate: Joi.string()
+							.required(),
+
 						})
 		
 				const {error,value}=schema.validate(req.body) //validate body data against schema
 				if(error){
 				switch (error.details[0].type) {
 					case 'string.empty': //required()
-						if(error.details[0].context.key==='text'){
+						if(error.details[0].context.key==='toDoText'){
 							res.status(400).send({
 					 			error:'Text input field is required'
 					 		})
 							break
 						}
-						else if(error.details[0].context.key==='date'){
+						else if(error.details[0].context.key==='toDoDate'){
 							res.status(400).send({
 					 			error:'Date input field is required'
 							})
