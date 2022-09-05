@@ -7,13 +7,13 @@ export default{
 	sumbit (list){
 		return axios().post('list/create',list)
 	},
-	update (list){
-		return axios().put(`list/${list.id}`)
+	update (id,list){
+		return axios().put(`list/${id}`,list)
 	},
-	deleteOne (list){
-		return axios().post(`list/${list.id}`)
+	deleteOne (id){
+		return axios().delete(`list/${id}`)
 	},
 	deleteAll (){
-		return axios().post(`list`)
+		return axios().delete(`list`)
 	},
 }

@@ -12,8 +12,8 @@ module.exports={
 
 			}
 			const list=await List.create(a)
+
 			console.log(list.toJSON())
-			//SORT BY UPDATE AND CREATE THNE SEND
 			res.status(200).send({
 				message:'to-do was created successfuly',
 				list:list.toJSON()
@@ -44,8 +44,8 @@ module.exports={
 					message:'to-do\'s were fetched successfuly'
 				})
 			}else{
-					res.status(400).send({
-					error:'No todo\'s in this list'
+					res.status(200).send({
+					message:'No todo\'s in this list'
 				})
 			}
 		} catch(e) {
@@ -65,9 +65,23 @@ module.exports={
 					userId:req.user.id
 				}
 			})
-			await list.destroy()
 			console.log(list)
-			res.send(list)
+			if(list){
+				const old=await List.destroy({
+					where:{
+					id:id,
+					userId:req.user.id
+				}
+				})
+				return res.status(200).send({
+					old,
+					message:'to-do was deleted successfuly'
+				})
+			}else{
+				 return res.status(400).send({
+				error:'No such to-do to delete:('
+			})
+			}
 		} catch(e) {
 			console.log(e)
 			res.status(400).send({
@@ -107,11 +121,12 @@ module.exports={
 	async updateById(req,res){
 		try {
 			const {id}=req.params
+		   
 			const data={
-				toDoText:req.body.text,
-				toDoDate:req.body.date,
+				toDoText:req.body.toDoText,
+				toDoDate:req.body.toDoDate,
 				userId:req.user.id,
-				toDoDone:req.body.done ? req.body.done : false
+				toDoDone:req.body.toDoDone? false:true
 			}
 			const list=await List.findOne({
 				where:{
@@ -120,13 +135,13 @@ module.exports={
 				}
 			})
 		   if (list) {
-		   await List.update(data,{
+		   const newList=await List.update(data,{
 				where:{
 					id:id,
 					userId:req.user.id
 				}
 			})
-		   	console.log(list)
+		   	console.log(newList)
 		   	return res.send(data)
 		   }
 		   else{

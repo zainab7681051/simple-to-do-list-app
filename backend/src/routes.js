@@ -31,6 +31,5 @@ module.exports=(app)=>{
 
 	app.put('/list/:id',
 		isUserAuethController,
-		ValidController.InList,
 		ListController.updateById)
 }
