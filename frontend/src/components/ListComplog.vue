@@ -15,7 +15,7 @@
                 <v-btn 
                 block 
                 color="#ab92b3"
-                @click="add=true">
+                @click="add=!add">
                   Add
                   <v-icon>
                     mdi-plus
@@ -67,10 +67,9 @@
                     <v-btn
                     v-if="isUserLoggedIn"
                     class="mt-3"
-                    icon
-                    outlined
                     large
-                    color="#ab9454"
+                    icon
+                    color="#ab92b3"
                     @click="submitlog">
                       <v-icon>
                         mdi-plus
@@ -102,26 +101,29 @@
                   style="border:3px solid #ab92b3;">
                   <v-list-item-icon>
                     <v-btn 
-                    color='#ab92b3'
+                    :color="todo.toDoDone==false ? '#777777' : '#88d8b0'"
+                    @click="check(todo.id,todo)"
                     >
-                      <v-icon>mdi-login</v-icon>
+                      <v-icon>mdi-check-bold</v-icon>
                     </v-btn>
+                    
                     <v-btn 
                     color='#ab92b3'
                     class="ml-2"
                     >
-                      <v-icon>mdi-login</v-icon>
+                      <v-icon>mdi-pencil</v-icon>
                     </v-btn>
+
                     <v-btn 
-                    color='#ab92b3'
+                    color='#ff6f69'
                     class="ml-2"
+                    @click="deleteOne(todo.id)"
                     >
-                      <v-icon>mdi-login</v-icon>
+                      <v-icon>mdi-trash-can-outline</v-icon>
                     </v-btn>
                   </v-list-item-icon>
-
-                    <p>{{todo.toDoText}}</p>
-                    <p>{{todo.toDoDate}}</p>
+                    <p  
+                    :style="todo.toDoDone?'text-decoration-line:line-through':'none'">{{todo.toDoText}}---{{todo.toDoDate}}</p>
                 </v-list-item>
                   <!-- 
                   <v-btn
@@ -131,10 +133,19 @@
                   color="#ab92b3"
                   style="position:">
                   </v-btn> -->
-                </v-list-item>
               </v-list>
-              </v-card-text>
             </v-card-subtitle>
+
+              <v-card-actions v-if="toDoList.list">
+                  <v-btn 
+                  block 
+                  color="#ff6f69"
+                  @click="deleteAll">
+                    <v-icon>
+                      mdi-trash-can-outline
+                    </v-icon>
+                  </v-btn>
+              </v-card-actions>
             </v-card>
           </v-flex>
         </v-container>
@@ -210,7 +221,8 @@ export default {
       ...mapState([
         'isUserLoggedIn',
         'user'
-      ])
+      ]),
+
     },
 
     methods: {
@@ -231,7 +243,6 @@ export default {
             console.log(error.response)
             this.fatalError=error.response.data.error;
             this.dialog=true
-            
           }
       }else{
         this.fatalError='no empty or invalid forms'
@@ -244,11 +255,28 @@ export default {
         this.toDoText=''
         this.toDoDate=''
         this.add=false
-      }
+      },
+
+      async check(id,todo){
+      await listService.update(id,todo)  
+      this.clear()            
+      window.location.reload()
+      },
+
+      async deleteOne(id){
+      await listService.deleteOne(id)  
+      this.clear()            
+      window.location.reload()
+      },
+
+      async deleteAll(){
+      await listService.deleteAll()  
+      this.clear()            
+      window.location.reload()
+      },
     },
 
-    async mounted(){
-            
+    async mounted(){     
       if (this.isUserLoggedIn){
         this.toDoList=(await listService.getAll()).data
       }
@@ -261,5 +289,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-  
+ 
 </style>
