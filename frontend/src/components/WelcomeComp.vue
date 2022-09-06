@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <v-layout>
-      <v-container>
+      <!-- <v-container> -->
         <v-flex xs12>
           <v-card
             class="mx-auto"
@@ -58,8 +58,8 @@
             </v-card-actions>
           </v-card>
 
-        </v-flex>
-      </v-container>
+        </v-flex><!-- 
+      </v-container> -->
     </v-layout>
   </v-layout>
 </template>

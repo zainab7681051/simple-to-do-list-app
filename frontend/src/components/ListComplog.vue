@@ -70,26 +70,23 @@
                     large
                     icon
                     color="#ab92b3"
-                    @click="submitlog">
-                      <v-icon>
-                        mdi-plus
-                      </v-icon>
-                    </v-btn>
-
-                    <!-- <v-btn
-                    v-if="!isUserLoggedIn"
-                    class="mt-3"
-                    icon
-                    outlined
-                    large
-                    tile
-                    color="#ab92b3"
                     @click="submit">
                       <v-icon>
                         mdi-plus
                       </v-icon>
                     </v-btn>
-                  -->
+
+                    <v-btn
+                    v-if="!isUserLoggedIn"
+                    class="mt-3"
+                    large
+                    icon
+                    color="#ab92b3"
+                    @click="guestSubmit">
+                      <v-icon>
+                        mdi-plus
+                      </v-icon>
+                    </v-btn>
                   </v-layout>
                 </v-layout>
                 <v-list>
@@ -100,18 +97,12 @@
                   block
                   style="border:3px solid #ab92b3;">
                   <v-list-item-icon>
+
                     <v-btn 
                     :color="todo.toDoDone==false ? '#777777' : '#88d8b0'"
                     @click="check(todo.id,todo)"
                     >
                       <v-icon>mdi-check-bold</v-icon>
-                    </v-btn>
-                    
-                    <v-btn 
-                    color='#ab92b3'
-                    class="ml-2"
-                    >
-                      <v-icon>mdi-pencil</v-icon>
                     </v-btn>
 
                     <v-btn 
@@ -125,18 +116,11 @@
                     <p  
                     :style="todo.toDoDone?'text-decoration-line:line-through':'none'">{{todo.toDoText}}---{{todo.toDoDate}}</p>
                 </v-list-item>
-                  <!-- 
-                  <v-btn
-                  icon
-                  outlined
-                  tile
-                  color="#ab92b3"
-                  style="position:">
-                  </v-btn> -->
               </v-list>
             </v-card-subtitle>
 
-              <v-card-actions v-if="toDoList.list">
+              <v-card-actions 
+              v-if="toDoList.list">
                   <v-btn 
                   block 
                   color="#ff6f69"
@@ -182,9 +166,11 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, minLength, email } from 'vuelidate/lib/validators'
 import {mapState} from 'vuex'
 import listService from '../service/list.js'
+
 export default {
   name: 'list-comp',
   mixins: [validationMixin],
+  
   data:()=>({
     add:false,
     toDoText:'',
@@ -194,6 +180,7 @@ export default {
     dateMenu:false,
     checked:false,
     toDoList:{}
+    
   }),
 
   validations: {
@@ -204,30 +191,30 @@ export default {
       required,
     }
   },
-    computed: {
-      textErrors () {
-        const errors = []
-        if (!this.$v.toDoText.$dirty) return errors
-        !this.$v.toDoText.required && errors.push('text field is required.')
-        return errors
-      },
-      dateErrors () {
-        const errors = []
-        if (!this.$v.toDoDate.$dirty) return errors
-        !this.$v.toDoDate.required && errors.push('date field is required')
-        return errors
-      },
 
-      ...mapState([
-        'isUserLoggedIn',
-        'user'
-      ]),
-
+  computed: {
+    textErrors () {
+      const errors = []
+      if (!this.$v.toDoText.$dirty) return errors
+      !this.$v.toDoText.required && errors.push('text field is required.')
+      return errors
+    },
+    dateErrors () {
+      const errors = []
+      if (!this.$v.toDoDate.$dirty) return errors
+      !this.$v.toDoDate.required && errors.push('date field is required')
+      return errors
     },
 
+    ...mapState([
+      'isUserLoggedIn',
+      'user',
+    ]),
+
+  },
+
     methods: {
-      //async sumbit(){return;},
-      async submitlog () {
+      async submit () {
         if(!this.$v.toDoText.$invalid&&
           !this.$v.toDoDate.$invalid)
           {
@@ -236,11 +223,10 @@ export default {
                 toDoText:this.toDoText,
                 toDoDate:this.toDoDate,
                 })
+              this.toDoList=(await listService.getAll()).data
               this.clear()
-              window.location.reload()
 
           }catch(error) {
-            console.log(error.response)
             this.fatalError=error.response.data.error;
             this.dialog=true
           }
@@ -257,32 +243,122 @@ export default {
         this.add=false
       },
 
-      async check(id,todo){
-      await listService.update(id,todo)  
-      this.clear()            
-      window.location.reload()
+      async check(id,todo){ 
+      try {
+        await listService.update(id,todo)
+        this.toDoList=(await listService.getAll()).data  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true
+      }
+      
       },
 
       async deleteOne(id){
-      await listService.deleteOne(id)  
-      this.clear()            
-      window.location.reload()
+      try {
+        await listService.deleteOne(id)
+        this.toDoList=(await listService.getAll()).data  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true
+      }
       },
 
       async deleteAll(){
-      await listService.deleteAll()  
-      this.clear()            
-      window.location.reload()
-      },
-    },
-
-    async mounted(){     
-      if (this.isUserLoggedIn){
-        this.toDoList=(await listService.getAll()).data
+      try {
+        await listService.deleteAll()
+        this.toDoList=(await listService.getAll()).data  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true   
       }
       
-    }
+      },
 
+      async guestSubmit () {
+        if(!this.$v.toDoText.$invalid&&
+          !this.$v.toDoDate.$invalid)
+          {
+            try {
+
+              const data={
+                id:this.$store.state.todo.list.length,
+                toDoText:this.toDoText,
+                toDoDate:this.toDoDate,
+                toDoDone:false
+              }
+              console.log(data)
+              
+              await this.$store.dispatch(
+              'setData',data)
+              this.clear()
+               
+
+          }catch(error) {
+            this.fatalError=error;
+            this.dialog=true
+          }
+      }else{
+        this.fatalError='no empty or invalid forms'
+        this.dialog=true
+      }
+    },
+
+    async guestCheck(id,todo){ 
+      try {
+        await listService.update(id,todo)  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true
+      }
+      
+      },
+
+      async guestDeleteOne(id){
+      try {
+        await listService.deleteOne(id)  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true
+      }
+      },
+
+      async guestDeleteAll(){
+      try {
+        await listService.deleteAll()  
+        this.clear()            
+         
+      } catch (error) {
+        this.fatalError=error.response.data.error;
+        this.dialog=true   
+      }
+      
+      },
+
+  },
+
+    async mounted(){      
+      try {
+        if (this.isUserLoggedIn){
+          this.toDoList=(await listService.getAll()).data
+        }else{
+          this.toDoList=await this.$store.state.todo
+        }
+      } catch (e) {
+      console.log(e)
+      }
+      
+    },
 }
 
 </script>

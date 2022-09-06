@@ -12,7 +12,8 @@ export default new Vuex.Store({
   state: {
     token:null,
     user:null,
-    isUserLoggedIn:false
+    isUserLoggedIn:false,
+    todo:{list:[{}]}//object in array==>object{array:[1:{object},2:{object}]}
   },
   getters: {
   },
@@ -23,7 +24,12 @@ export default new Vuex.Store({
     },
     setUser(state, user){
       state.user=user
-    }
+    },
+    setData(state, data){
+      state.todo.list.push(data)
+      console.log("todo.list",state.todo.list)
+
+    },
   },
   actions: {
     setToken({commit}, token){
@@ -31,7 +37,12 @@ export default new Vuex.Store({
     },
     setUser({commit}, user){
       commit('setUser', user)
-    }
+    },
+    setData({commit}, data){
+      commit('setData', data)
+    },
+    
+
   },
   modules: {
   }
