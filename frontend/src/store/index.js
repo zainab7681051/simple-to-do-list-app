@@ -27,6 +27,7 @@ export default new Vuex.Store({
     },
     setData(state, data){
       state.todo.list.push(data)
+      state.todo.list.sort((a, b) => b - a)
       console.log("todo.list",state.todo.list)
 
     },
