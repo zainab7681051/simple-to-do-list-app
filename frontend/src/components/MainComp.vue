@@ -10,8 +10,6 @@
         </v-card-title>
           <list-comp-log v-if="msg=='WELCOME TO YOUR TO-DO\'S LIST'"/>
 
-          <fav-comp v-if="msg=='YOUR FAVOURITES' && isUserLoggedIn"/>
-
           <edit-prof-comp v-if="msg=='EDIT YOUR PROFILE' && isUserLoggedIn"/> 
 
           <about-comp v-if="msg=='ABOUT US'"/>
@@ -27,7 +25,6 @@
 
 <script>
 import ListCompLog from './ListCompLog.vue'
-import FavComp from './FavComp.vue'
 import EditProfComp from './EditProfComp.vue'
 import AboutComp from './AboutComp.vue'
 import ContactComp from './ContactComp.vue'
@@ -52,7 +49,6 @@ export default {
 
   components:{
     ListCompLog,
-    FavComp,
     EditProfComp,
     AboutComp,
     ContactComp,

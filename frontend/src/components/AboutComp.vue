@@ -3,12 +3,9 @@
   <v-layout>
     <v-container>
     <v-flex xs12>
-      <v-card>
-        <v-card-title
-        style="background-color:#ab92b3;">
-        </v-card-title>
+      <v-card style="border:3px solid #ab92b3;">
         <v-card-text>
-          About
+          ABOUT US COMPONENT
         </v-card-text>
       </v-card>
     </v-flex>

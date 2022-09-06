@@ -65,19 +65,6 @@
 
 
         <v-list-item
-        to="/favs"
-        v-if="isUserLoggedIn"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Favourites</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item
         to="/profile"
         v-if="isUserLoggedIn"
         >

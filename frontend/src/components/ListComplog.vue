@@ -65,24 +65,11 @@
                     </v-flex>
                     <v-spacer/>
                     <v-btn
-                    v-if="isUserLoggedIn"
                     class="mt-3"
                     large
                     icon
                     color="#ab92b3"
-                    @click="submit">
-                      <v-icon>
-                        mdi-plus
-                      </v-icon>
-                    </v-btn>
-
-                    <v-btn
-                    v-if="!isUserLoggedIn"
-                    class="mt-3"
-                    large
-                    icon
-                    color="#ab92b3"
-                    @click="guestSubmit">
+                    @click="isUserLoggedIn ? submit():guestSubmit()">
                       <v-icon>
                         mdi-plus
                       </v-icon>
@@ -100,7 +87,7 @@
 
                     <v-btn 
                     :color="todo.toDoDone==false ? '#777777' : '#88d8b0'"
-                    @click="check(todo.id,todo)"
+                    @click="isUserLoggedIn ? check(todo.id,todo):guestCheck(todo)"
                     >
                       <v-icon>mdi-check-bold</v-icon>
                     </v-btn>
@@ -108,7 +95,7 @@
                     <v-btn 
                     color='#ff6f69'
                     class="ml-2"
-                    @click="deleteOne(todo.id)"
+                    @click="isUserLoggedIn ? deleteOne(todo.id):guestDeleteOne(todo)"
                     >
                       <v-icon>mdi-trash-can-outline</v-icon>
                     </v-btn>
@@ -119,12 +106,11 @@
               </v-list>
             </v-card-subtitle>
 
-              <v-card-actions 
-              v-if="toDoList.list">
+              <v-card-actions>
                   <v-btn 
                   block 
                   color="#ff6f69"
-                  @click="deleteAll">
+                  @click="isUserLoggedIn ? deleteAll():guestDeleteAll()">
                     <v-icon>
                       mdi-trash-can-outline
                     </v-icon>
@@ -178,7 +164,6 @@ export default {
     fatalError:'',
     dialog:false,
     dateMenu:false,
-    checked:false,
     toDoList:{}
     
   }),
@@ -236,13 +221,6 @@ export default {
         }
       },
 
-      clear(){
-        this.$v.$reset()
-        this.toDoText=''
-        this.toDoDate=''
-        this.add=false
-      },
-
       async check(id,todo){ 
       try {
         await listService.update(id,todo)
@@ -286,17 +264,17 @@ export default {
           !this.$v.toDoDate.$invalid)
           {
             try {
-
               const data={
-                id:this.$store.state.todo.list.length,
+                id:this.$store.state.id,
                 toDoText:this.toDoText,
                 toDoDate:this.toDoDate,
                 toDoDone:false
               }
-              console.log(data)
-              
               await this.$store.dispatch(
               'setData',data)
+              await this.$store.dispatch(
+              'Increment')
+              this.toDoList=await this.$store.state.todo
               this.clear()
                
 
@@ -310,9 +288,12 @@ export default {
       }
     },
 
-    async guestCheck(id,todo){ 
+    async guestCheck(todo){ 
       try {
-        await listService.update(id,todo)  
+        
+        await this.$store.dispatch(
+        'Check',todo)
+        this.toDoList=await this.$store.state.todo
         this.clear()            
          
       } catch (error) {
@@ -322,9 +303,11 @@ export default {
       
       },
 
-      async guestDeleteOne(id){
+      async guestDeleteOne(todo){
       try {
-        await listService.deleteOne(id)  
+        await this.$store.dispatch(
+        'DeleteOne',todo)
+        this.toDoList=await this.$store.state.todo
         this.clear()            
          
       } catch (error) {
@@ -335,14 +318,27 @@ export default {
 
       async guestDeleteAll(){
       try {
-        await listService.deleteAll()  
-        this.clear()            
+   
+        await this.$store.dispatch(
+        'DeleteAll')
+        this.toDoList={}
+        this.clear()
+
          
       } catch (error) {
         this.fatalError=error.response.data.error;
         this.dialog=true   
       }
       
+      },
+
+
+      clear(){
+        this.$v.$reset()
+        this.add=false
+        this.toDoText=''
+        this.toDoDate=new Date().toISOString().substr(0, 10)
+        this.fatalError=''
       },
 
   },
