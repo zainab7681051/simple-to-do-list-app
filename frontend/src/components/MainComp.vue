@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ListCompLog from './ListCompLog.vue'
+import ListCompLog from '../components/ListCompLog.vue'
 import {mapState} from 'vuex'
 
 export default {
