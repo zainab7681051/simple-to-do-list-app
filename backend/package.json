@@ -1,14 +1,21 @@
 {
-  "name": "backend",
+  "name": "simple-to-do-list-app-api",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "simple-to-do-list-app-api",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "index": "node ./src/index.js",
     "seed": "node ./seed/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "todo",
+    "api",
+    "nodejs",
+    "express",
+    "postgres"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -16,6 +23,7 @@
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",

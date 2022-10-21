@@ -5,16 +5,10 @@
     <v-flex xs12>
       <v-card>
         <v-card-title
-        style="background-color:#ab92b3;">
+        style="background-color:#088da5;">
           {{msg}}
         </v-card-title>
           <list-comp-log v-if="msg=='WELCOME TO YOUR TO-DO\'S LIST'"/>
-
-          <edit-prof-comp v-if="msg=='EDIT YOUR PROFILE' && isUserLoggedIn"/> 
-
-          <about-comp v-if="msg=='ABOUT US'"/>
-
-          <contact-comp v-if="msg=='CONTACT US'"/> 
           
         </v-card>
     </v-flex><!-- 
@@ -25,9 +19,6 @@
 
 <script>
 import ListCompLog from './ListCompLog.vue'
-import EditProfComp from './EditProfComp.vue'
-import AboutComp from './AboutComp.vue'
-import ContactComp from './ContactComp.vue'
 import {mapState} from 'vuex'
 
 export default {
@@ -49,9 +40,6 @@ export default {
 
   components:{
     ListCompLog,
-    EditProfComp,
-    AboutComp,
-    ContactComp,
   }
 }
 

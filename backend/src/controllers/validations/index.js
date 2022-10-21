@@ -1,204 +1,231 @@
-const Joi=require('joi')
-module.exports={
-	async register(req,res,next){
-	try {
-	  	const schema=Joi.object({
-							name: Joi.string()
-					        .alphanum()
-					        .max(15)
-					        .required(),
-							
-							email: Joi.string()
-							.email()
-							.required(),
-		
-							password: Joi.string()
-					        .alphanum()
-					        .min(5)
-					        .max(15)
-							.required()
-						})
-		
-			const {error,value}=schema.validate(req.body) //validate body data against schema
-	
-			if(error){
-			switch (error.details[0].type) {
+const Joi = require('joi')
+module.exports = {
+	async register(req, res, next) {
+		try {
+			const schema = Joi.object({
+				name: Joi.string()
+					.alphanum()
+					.max(15)
+					.required(),
+
+				email: Joi.string()
+					.email()
+					.required(),
+
+				password: Joi.string()
+					.alphanum()
+					.min(5)
+					.max(15)
+					.required()
+			})
+
+			const {
+				error,
+				value
+			} = schema.validate(req.body) //validate body data against schema
+
+			if (error) {
+				switch (error.details[0].type) {
 				case 'string.alphanum':
-					if(error.details[0].context.key==='name'){
-						res.status(400).send({
-				 			error:'Name must be alphanumerical'
-				 		})
+					if (error.details[0].context.key === 'name') {
+						res.status(400)
+							.send({
+								error: 'Name must be alphanumerical'
+							})
 						break
 					}
-					else if(error.details[0].context.key==='password'){
-						res.status(400).send({
-				 			error:'Password must be alphanumerical'
-						})
+					else if (error.details[0].context.key === 'password') {
+						res.status(400)
+							.send({
+								error: 'Password must be alphanumerical'
+							})
 						break
 					}
-					
-				case 'string.max':
-					if(error.details[0].context.key==='name'){
-						res.status(400).send({
-				 			error:'Name must be at most 15 characters long'
-				 		})
-						break
-					}
-					else if(error.details[0].context.key==='password'){
-						res.status(400).send({
-				 			error:'Password must be at most 15 characters long'
-						})
-						break
-					}
-	
-				case 'string.min':
-					res.status(400).send({
-			 			error:'Password must be at least 5 characters long'
-			 		})
-					break
-			
-				case 'string.email':
-					res.status(400).send({
-			 			error:'Must be valid e-mail'
-					})
-					break;
-	
-				case 'string.empty': //required()
-					if(error.details[0].context.key==='name'){
-						res.status(400).send({
-				 			error:'Name is required'
-				 		})
-						break
-					}
-					else if(error.details[0].context.key==='email'){
-						res.status(400).send({
-				 			error:'E-mail is required'
-						})
-						break
-					}
-					else if(error.details[0].context.key==='password'){
-						res.status(400).send({
-				 			error:'Password is required'
-						})
-						break
-					}
-	
-				default:
-					res.status(400).send({
-						error:'No empty or invalid forms'
-					})
-					break;
+
+					case 'string.max':
+						if (error.details[0].context.key === 'name') {
+							res.status(400)
+								.send({
+									error: 'Name must be at most 15 characters long'
+								})
+							break
+						}
+						else if (error.details[0].context.key === 'password') {
+							res.status(400)
+								.send({
+									error: 'Password must be at most 15 characters long'
+								})
+							break
+						}
+
+						case 'string.min':
+							res.status(400)
+								.send({
+									error: 'Password must be at least 5 characters long'
+								})
+							break
+
+						case 'string.email':
+							res.status(400)
+								.send({
+									error: 'Must be valid e-mail'
+								})
+							break;
+
+						case 'string.empty': //required()
+							if (error.details[0].context.key === 'name') {
+								res.status(400)
+									.send({
+										error: 'Name is required'
+									})
+								break
+							}
+							else if (error.details[0].context.key === 'email') {
+								res.status(400)
+									.send({
+										error: 'E-mail is required'
+									})
+								break
+							}
+							else if (error.details[0].context.key === 'password') {
+								res.status(400)
+									.send({
+										error: 'Password is required'
+									})
+								break
+							}
+
+							default:
+								res.status(400)
+									.send({
+										error: 'No empty or invalid forms'
+									})
+								break;
 				}
-			
+
 			} else {
 				next()
 			}
-	  } catch (e) {
-	  	console.log(e)
-	  	res.status(500).send({
-			error:'An error has occured :('
-		})
-	  }
+		} catch (e) {
+			console.log(e)
+			res.status(500)
+				.send({
+					error: 'An error has occured :('
+				})
+		}
 
 	},
 
-	async login(req,res,next){
-	  try {
-	  	const schema=Joi.object({
-							name: Joi.string()
-					        .required(),
-		
-							password: Joi.string()
-							.required()
-						})
-		
-				const {error,value}=schema.validate(req.body) //validate body data against schema
-				if(error){
+	async login(req, res, next) {
+		try {
+			const schema = Joi.object({
+				name: Joi.string()
+					.required(),
+
+				password: Joi.string()
+					.required()
+			})
+
+			const {
+				error,
+				value
+			} = schema.validate(req.body) //validate body data against schema
+			if (error) {
 				switch (error.details[0].type) {
-					case 'string.empty': //required()
-						if(error.details[0].context.key==='name'){
-							res.status(400).send({
-					 			error:'Name or E-mail is required'
-					 		})
-							break
-						}
-						else if(error.details[0].context.key==='password'){
-							res.status(400).send({
-					 			error:'Password is required'
+				case 'string.empty': //required()
+					if (error.details[0].context.key === 'name') {
+						res.status(400)
+							.send({
+								error: 'Name or E-mail is required'
 							})
-							break
-						}
-		
+						break
+					}
+					else if (error.details[0].context.key === 'password') {
+						res.status(400)
+							.send({
+								error: 'Password is required'
+							})
+						break
+					}
+
 					default:
 						console.log(error.details)
-						res.status(400).send({
-							error:'No empty or invalid forms'
-						})
+						res.status(400)
+							.send({
+								error: 'No empty or invalid forms'
+							})
 						break;
-					}
-				
-				} else {
-					next()
 				}
-	  } catch (e) {
-	  	console.log(e)
-	  	res.status(500).send({
-			error:'An error has occured :('
-		})
-	  }
-  
+
+			} else {
+				next()
+			}
+		} catch (e) {
+			console.log(e)
+			res.status(500)
+				.send({
+					error: 'An error has occured :('
+				})
+		}
+
 	},
 
-	async InList(req,res,next){
-	  try {
-	  	const schema=Joi.object({
-							toDoText: Joi.string()
-					        .required(),
-		
-							toDoDate: Joi.string()
-							.required(),
+	async InList(req, res, next) {
+		try {
+			const schema = Joi.object({
+				toDoText: Joi.string()
+					.required(),
 
-						})
-		
-				const {error,value}=schema.validate(req.body) //validate body data against schema
-				if(error){
+				toDoDate: Joi.string()
+					.required(),
+
+			})
+
+			const {
+				error,
+				value
+			} = schema.validate(req.body) //validate body data against schema
+			if (error) {
 				switch (error.details[0].type) {
-					case 'string.empty': //required()
-						if(error.details[0].context.key==='toDoText'){
-							res.status(400).send({
-					 			error:'Text input field is required'
-					 		})
-							break
-						}
-						else if(error.details[0].context.key==='toDoDate'){
-							res.status(400).send({
-					 			error:'Date input field is required'
+				case 'string.empty': //required()
+					if (error.details[0].context.key === 'toDoText') {
+						res.status(400)
+							.send({
+								error: 'Text input field is required'
 							})
-							break
-						}
-		
+						break
+					}
+					else if (error.details[0].context.key === 'toDoDate') {
+						res.status(400)
+							.send({
+								error: 'Date input field is required'
+							})
+						break
+					}
+
 					default:
 						console.log(error.details)
-						res.status(400).send({
-							error:'No empty or invalid fields'
-						})
+						res.status(400)
+							.send({
+								error: 'No empty or invalid fields'
+							})
 						break;
-					}
-				
-				} else {
-					next()
 				}
-	  } catch (e) {
-	  	console.log(e)
-	  	res.status(500).send({
-			error:'An error has occured :('
-		})
-	  }
-  
+
+			} else {
+				next()
+			}
+		} catch (e) {
+			console.log(e)
+			res.status(500)
+				.send({
+					error: 'An error has occured :('
+				})
+		}
+
 	},
 
 
-	
 
 }
 
@@ -220,7 +247,7 @@ annotate() - function that returns a string with an annotated version of the obj
  at the places where errors occurred. Takes an optional parameter that, if truthy, will strip the colors out of*/
 
 
- /*
+/*
  what error.details returns when error is in name field:
  [
   {

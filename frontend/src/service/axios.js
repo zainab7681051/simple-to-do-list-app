@@ -2,9 +2,9 @@
 
 import axios from 'axios'
 import store from '../store'
-export default ()=>{
+export default () => {
 	return axios.create({
-		baseURL:'http://localhost:1000/',
+		baseURL: 'https://simple-todo-app-api.onrender.com/',
 		headers: {
 			"Content-type": "application/json",
 			Authorization: `Bearer ${store.state.token}`

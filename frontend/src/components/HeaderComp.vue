@@ -7,7 +7,7 @@
     >
       <v-sheet
         class="pa-4"
-        color="#ab92b3"
+        color="#088da5"
       >
          <v-avatar
             class="mb-4"
@@ -63,44 +63,6 @@
           </v-list-item-content>
         </v-list-item>
 
-
-        <v-list-item
-        to="/profile"
-        v-if="isUserLoggedIn"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-account-cog-outline</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Edit Profile</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        
-        <v-list-item
-        to="/about"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-alert-box</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>About</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item
-        to="/contact"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-email-outline</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
         <v-list-item
         v-if="isUserLoggedIn"
         @click="logout"
@@ -124,15 +86,19 @@
               class="display-1"
               style="cursor:pointer">TO DO'S</v-toolbar-title>
       <v-spacer/>
-      <v-toolbar-items>
-        <v-switch
-        v-model="$vuetify.theme.dark"
-        label="change theme"
-        class="mt-5"
-        color="#ab92b3"
+        <v-btn
+        @click="$vuetify.theme.dark=!$vuetify.theme.dark"
+        color="#088da5"
+        icon
         >
-        </v-switch>
-      </v-toolbar-items>
+        <v-icon v-if="!$vuetify.theme.dark">
+          mdi-moon-waning-crescent
+        </v-icon>
+
+        <v-icon v-if="$vuetify.theme.dark">
+          mdi-white-balance-sunny
+        </v-icon>
+        </v-btn>
     </v-app-bar> 
   </header>
 </template>

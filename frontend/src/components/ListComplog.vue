@@ -10,11 +10,11 @@
           <v-container>
           <v-flex xs12>
             <v-card 
-            style="border:3px solid #ab92b3;">
+            style="border:3px solid #088da5;">
               <v-card-title>
                 <v-btn 
                 block 
-                color="#ab92b3"
+                color="#088da5"
                 @click="add=!add">
                   Add
                   <v-icon>
@@ -68,7 +68,7 @@
                     class="mt-3"
                     large
                     icon
-                    color="#ab92b3"
+                    color="#088da5"
                     @click="isUserLoggedIn ? submit():guestSubmit()">
                       <v-icon>
                         mdi-plus
@@ -82,7 +82,7 @@
                   class="mt-2 mb-2"
                   :key="todo.id"
                   block
-                  style="border:3px solid #ab92b3;">
+                  style="border:3px solid #088da5;">
                   <v-list-item-icon>
 
                     <v-btn 

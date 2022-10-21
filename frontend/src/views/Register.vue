@@ -13,7 +13,7 @@
                 <v-flex>
                   <v-card>
                     <v-card-title 
-                    style="background-color:#ab92b3;">
+                    style="background-color:#088da5;">
                     REGISTER
                     </v-card-title>
                     
